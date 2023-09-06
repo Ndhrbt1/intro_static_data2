@@ -1,0 +1,40 @@
+part of '_index.dart';
+
+class ProductEditCtrl {
+  init() => logxx.i(ProductEditCtrl, '...');
+
+  action() => _dt.rxInt.setState((s) => s + 1);
+
+  // * Fungsi edit menggunakan setstate
+
+  editProduct() {
+    // Product newProduct = Product(
+    //   id: '${_dt.rxProduct.st?.id}',
+    //   name: 'new product',
+    //   price: 99999,
+    //   quantity: 99,
+    //   createdAt: '${_dt.rxProduct.st?.createdAt}',
+    //   updatedAt: DateTime.now().toString(),
+    // );
+
+    final newProduct = Product(
+      id: _dt.rxSelectedId.st,
+      name: _dt.rxProductName.st.value,
+      price: int.parse(_dt.rxPrice.st.value),
+      quantity: int.parse(_dt.rxQuantity.st.value),
+      createdAt: DateTime.now().toString(),
+      updatedAt: DateTime.now().toString(),
+    );
+
+    final index = _dt.rxProductList.st.indexWhere((element) => element.id == newProduct.id);
+    _dt.rxProductList.setState((s) => s[index] = newProduct);
+
+    logx.wtf(newProduct.toString());
+    nav.back();
+    nav.back();
+    return _dt.rxProductList.st[index];
+  }
+
+  // * fungsi untuk mengirimkan hasil inputan
+  submitEdit() => _dt.rxForm.submit();
+}
